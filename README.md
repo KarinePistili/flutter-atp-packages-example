@@ -1,16 +1,89 @@
 # flutter_app
 
 A new Flutter application.
+# Passo a Passo
 
-## Getting Started
+Já estar com o projeto rodando no emulador
 
-This project is a starting point for a Flutter application.
+## Parte 1: Apagar coisas não necessárias
 
-A few resources to get you started if this is your first Flutter project:
+Criei um projeto flutter, rodei e não alterei o código
+É o projeto exemplo
+Apagar tudo o q nao for necessário
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Parte 2: Importar pacotes
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Ter o pub dev aberto e importar os pacotes no pubspect.yaml e na main
+```
+image_picker: ^0.6.7+17
+import 'package:image_picker/image_picker.dart';
+
+carousel_slider: ^2.3.1
+import 'package:carousel_slider/carousel_slider.dart';
+```
+
+## Parte 3: Image picker
+
+```
+ File _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Image Picker Example'),
+      ),
+      body: Center(
+        child: _image == null
+            ? Text('No image selected.')
+            : Image.file(_image),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: getImage,
+        tooltip: 'Pick Image',
+        child: Icon(Icons.add_a_photo),
+      ),
+    );
+  }
+```
+
+## Parte 4: Carrousel Slider
+
+Usar como exemplo o 
+
+```
+class ComplicatedImageDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(title: Text('Complicated image slider demo')),
+      body: Container(
+        child: Column(children: <Widget>[
+          CarouselSlider(
+            options: CarouselOptions(
+              autoPlay: true,
+              aspectRatio: 2.0,
+              enlargeCenterPage: true,
+            ),
+            items: imageSliders,
+          ),
+        ],)
+      ),
+    );
+  }
+}
+```
